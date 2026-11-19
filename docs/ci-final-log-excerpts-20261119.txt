@@ -1,0 +1,9 @@
+2026-11-19T08:26:58.7437837Z found 0 vulnerabilities
+2026-11-19T08:26:59.6428842Z found 0 vulnerabilities
+2026-11-19T08:27:17.6092408Z  Test Files  4 passed (4)
+2026-11-19T08:27:17.6093144Z       Tests  36 passed (36)
+2026-11-19T08:29:01.7467787Z   6 passed (5.6s)
+2026-11-19T08:29:02.1631733Z found 0 vulnerabilities
+2026-11-19T08:29:02.5112258Z found 0 vulnerabilities
+2026-11-19T08:29:02.8268240Z found 0 vulnerabilities
+2026-11-19T08:29:03.1356317Z found 0 vulnerabilities

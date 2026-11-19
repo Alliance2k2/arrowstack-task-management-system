@@ -1,3 +1,5 @@
+> Current container verification: [2026-11-19 test evidence](testing-20261119.md). Hosted fresh-stack build, migration, smoke and shutdown checks pass.
+
 # Operation and deployment preparation
 
 ## Native roles
@@ -26,9 +28,9 @@ backend/.env contains runtime DATABASE_URL, random JWT_SECRET, NODE_ENV, HOST, P
 
 HOST defaults to loopback. Production requires HTTPS WEB_ORIGIN and a password-bearing database URL; production enables Secure cookies. Validate server authentication/proxy/network rules too. /health is liveness; /ready returns 503 on SQL failure. SIGINT/SIGTERM closes listener/Prisma with a ten-second bound.
 
-## Docker - unverified here
+## Docker - verified in hosted CI
 
-Docker is unavailable. On a Docker-enabled host:
+Fresh-stack build/start/smoke/shutdown passed on hosted Ubuntu CI; see container-evidence-20261119.txt and current testing report. Docker is unavailable locally. On a Docker-enabled host:
 
 1. Copy root .env.example to .env; set different random hex POSTGRES_PASSWORD, APP_DB_PASSWORD and JWT_SECRET.
 2. Run `docker compose config --quiet` without printing resolved secrets.
@@ -42,4 +44,4 @@ A new volume bootstrap creates a restricted role. A separate migration job appli
 
 Only frontend port 8082 is published on loopback; Compose is local HTTP/development only. Production still needs HTTPS termination, production environment, controlled migration, network restrictions, reviewed images, shared limits/trusted proxy settings, monitoring, backups and tested restores. No production infrastructure or public deployment was created.
 
-For a container-only administrator demo, privately set host ADMIN_EMAIL and ADMIN_PASSWORD, then run `docker compose exec -e ADMIN_EMAIL -e ADMIN_PASSWORD backend npm run admin:create`. Do not place password values in the command or recording. Remove the host variables afterward. This command is part of the unexecuted Docker validation procedure.
+For a container-only administrator demo, privately set host ADMIN_EMAIL and ADMIN_PASSWORD, then run `docker compose exec -e ADMIN_EMAIL -e ADMIN_PASSWORD backend npm run admin:create`. Do not place password values in the command or recording. Remove the host variables afterward. The container administrator-provisioning command itself was not exercised by the smoke suite; administrator authorization is covered by native/hosted API and browser tests.

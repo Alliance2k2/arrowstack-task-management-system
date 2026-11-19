@@ -9,7 +9,7 @@ I adapted authentication patterns from my first project and added dedicated task
 Source: https://github.com/Alliance2k2/arrowstack-task-management-system
 Demo: [add recording link]
 
-See the repository test evidence for exact results and limits. The repository is published; see the current test evidence for hosted CI status. Docker execution remains unverified.
+See the repository test evidence for exact results and limits. The repository is published; see the current test evidence for hosted CI status. Fresh-stack Docker verification passed in hosted CI.
 
 #Arrowstack #FullStackDevelopment #React #PostgreSQL #SoftwareEngineering
 

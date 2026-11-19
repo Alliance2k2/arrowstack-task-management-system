@@ -8,8 +8,8 @@ Auth POST `/auth/register`: `{name,email,password}` (12-128 character password);
 | --- | --- | --- |
 | GET | /health | Process liveness |
 | GET | /ready | Database readiness; 503 when unavailable |
-| GET | /tasks | Optional search (title/description, case insensitive), status, priority, page (1?10000); `{items,total,page,pageSize:20}` |
-| POST | /tasks | title (1?160 trimmed), description (0?4000), status TODO/IN_PROGRESS/DONE, priority LOW/MEDIUM/HIGH, dueAt ISO timestamp or null; 201 `{task}` |
+| GET | /tasks | Optional search (title/description, case insensitive), status, priority, page (1-10000); `{items,total,page,pageSize:20}` |
+| POST | /tasks | title (1-160 trimmed), description (0-4000), status TODO/IN_PROGRESS/DONE, priority LOW/MEDIUM/HIGH, dueAt ISO timestamp or null; 201 `{task}` |
 | GET | /tasks/:id | Own `{task}`, 404 for another account |
 | PATCH | /tasks/:id | Current integer version plus any task fields; `{task}` with incremented version; stale 409 |
 | DELETE | /tasks/:id | Own task; 204, repeated delete 404 |

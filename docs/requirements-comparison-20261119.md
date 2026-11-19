@@ -21,7 +21,7 @@ O1 = supplied offer; O2 = handbook common standard; U = current user instruction
 | Relational DB/migrations | O2 / U | initial SQL on fresh PostgreSQL; migration status/diff | initial auth + Task SQL; FK/checks/index; status/diff | Existing owner dev DB remains untouched |
 | Audit records | O2 | auth/session/denial events | auth and transactional create/update/delete events | No audit retention/monitoring service |
 | Repeatable testing/evidence | O2 / U | 27 backend + runner + seven browser cases | 36 backend + runner + six task browser cases | Initial hosted Chromium CI passed; latest commit status recorded separately |
-| Deployment configuration | O2; Docker stack recommendation / U | Dockerfile, Nginx, Compose, CI | independent Docker/Compose ports and four-table runtime grant, CI | Docker unavailable; containers unexecuted |
+| Deployment configuration | O2; Docker stack recommendation / U | Dockerfile, Nginx, Compose, CI | independent Docker/Compose ports and four-table runtime grant, CI | Hosted fresh-stack Docker build/start/smoke/shutdown passed; local Docker unavailable |
 | README/decisions/limitations/demo | O1 / O2 / U | README, docs, demo-guide and current review | README, architecture, API guide, demo-guide and current review | Owner must record/explain demonstration |
 | GitHub/version control | O1 / U | published public repository; local review history preserved | published separate arrowstack-task-management-system repository | Owner approved both; creation/push performed November 19 |
 | LinkedIn evidence | O1 / U | docs/linkedin-draft.md | docs/linkedin-draft.md | Drafts only; no post or demo URL fabricated |

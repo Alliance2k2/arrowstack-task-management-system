@@ -1,4 +1,4 @@
-# Submission readiness ? 2026-11-19
+# Submission readiness - 2026-11-19
 
 The implemented assignment scope is locally verified and published at https://github.com/Alliance2k2/arrowstack-task-management-system. See [current test evidence](testing-20261119.md), [requirements matrix](requirements-comparison-20261119.md), [API guide](api-documentation.md), [demonstration script](demo-guide.md) and [LinkedIn draft](linkedin-draft.md). Earlier readiness reports are historical.
 
@@ -12,7 +12,7 @@ Fresh migrations applied, migration status is current and Prisma reports no sche
 
 Owner approved both public repositories and pushes. Initial published source commit: `f092819102ac776c3702c129239bd13180b89a98`. Its hosted [verification run](https://github.com/Alliance2k2/arrowstack-task-management-system/actions/runs/44486213057) completed successfully: clean npm installs, Prisma generation/migrations, backend/frontend quality/build, API/concurrency tests, runner guard, Chromium workflow and all dependency audits. Saved job metadata and log excerpts are in ci-evidence-20261119.json and ci-log-excerpts-20261119.txt.
 
-The next review commit includes current documentation, strict full-dependency audit gates and an additional Docker Compose job. Task 2 also includes the local verified regression fix. That new job creates disposable credentials, builds/starts the real Compose stack, runs scripts/verify-compose.mjs through Nginx and stops containers. Its hosted execution is pending at preparation of this report; do not infer Docker success from the earlier PostgreSQL service container. The final parent workspace report records exact latest commits and hosted outcomes after publication.
+The final tested source commit is `53bd1b0977a04018bc66b2ef287d93931101cd8b` ([hosted run](https://github.com/Alliance2k2/arrowstack-task-management-system/actions/runs/44487614850)). Both verify and containers jobs passed. Container verification on Ubuntu covered: Compose validation, image builds, PostgreSQL bootstrap/migrations, healthy services, smoke requests through Nginx and docker compose down. See container-evidence-20261119.txt. Task 2 also verifies CRUD/filter/summary, stale edits and owner isolation through containers. A final documentation-only commit records these results; no application, lockfile or workflow changes are included in that evidence commit. The parent report records its exact identifier.
 
 ## Security and dependency review
 
@@ -27,6 +27,6 @@ All four current npm audit responses per project report zero vulnerabilities, in
 - No original dashboard screenshot or detailed portal rubric is present locally. Prior Task 1 documents cite a screenshot from an earlier conversation; it was not independently inspected here.
 - Supplied handbook says exactly three different industry scenarios; supplied offer says two assigned tasks and two LinkedIn posts, while its body asks for weekly summaries. Your current instruction supplies the authentication and task-management titles. Confirm the final rubric/count and posting cadence with your mentor; no unseen official requirement is certified complete.
 - Owner must record both demonstrations, explain decisions/originality, review/publish the two drafts with genuine video links and the confirmed official organization tag, and submit through the portal. No message, post or submission was sent.
-- Container workflow outcome must be checked after the current review push. Native builds/API/browser flows are verified; local Docker is unavailable.
+- Docker workflow passed on hosted Linux; local Docker remains unavailable. This validates a fresh disposable stack, not production operations or upgrades to existing volumes.
 
 Separate repositories, two README files, API documentation, demo scripts, LinkedIn drafts, testing evidence and source-aware comparison matrices are prepared. Optional password recovery/MFA, team assignments, reminders, monitoring and backups remain recommendations. The final report is FINAL_SUBMISSION_READINESS.md in the parent workspace; Git commit self-reference is deliberately avoided inside this commit.

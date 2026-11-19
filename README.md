@@ -37,11 +37,11 @@ Backend: `npm run typecheck`, `npm run lint`, `npm run format:check`, `npm run b
 
 Use a disposable **local database ending in _test**. Tests delete its users/tasks/sessions/audit records. In backend set NODE_ENV=test and TEST_DATABASE_URL privately, then run `npm run db:migrate`, `npm test`, `npm run test:runner`. Build backend first. From repository root, run `node scripts/verify-browser.mjs`; Windows Edge can be selected with PLAYWRIGHT_CHANNEL=msedge, otherwise install Chromium with `npx playwright install chromium` in frontend. Browser runner owns API 3003/UI 5176, requires child-process startup acknowledgment, and refuses unrelated API listeners. Remove test environment variables afterward.
 
-CI is `.github/workflows/task2-qa.yml`: PostgreSQL service, migrations, type/lint/format/build, API/concurrency tests and browser workflow. Hosted execution began after approved publication; see the current readiness report. Full tooling audit remains visible separately from a strict production audit. See current advisory limits in test evidence.
+CI is `.github/workflows/task2-qa.yml`: PostgreSQL service, migrations, type/lint/format/build, API/concurrency tests and browser workflow. Hosted execution began after approved publication; see the current readiness report. Both full tooling and production dependency audits block CI. Current full/production audits report zero findings; dated reports remain available.
 
 ## Docker local demonstration
 
-Docker execution is unverified on this machine because Docker is not installed. Copy root .env.example to .env and replace all three placeholders with distinct random hex values. Run `docker compose config --quiet`, `docker compose up --build -d`, and `docker compose ps`. Open http://127.0.0.1:8082 . Only the frontend is published, on loopback. Migration job grants the four application tables to a restricted runtime role. Stop with `docker compose down`; adding -v destroys data. This Compose setup is HTTP/development; production needs HTTPS, backups, monitoring and reviewed proxy settings.
+Docker build/start/migration/API smoke/shutdown passed on hosted Ubuntu CI. Docker is not installed locally; see current test evidence. Copy root .env.example to .env and replace all three placeholders with distinct random hex values. Run `docker compose config --quiet`, `docker compose up --build -d`, and `docker compose ps`. Open http://127.0.0.1:8082 . Only the frontend is published, on loopback. Migration job grants the four application tables to a restricted runtime role. Stop with `docker compose down`; adding -v destroys data. This Compose setup is HTTP/development; production needs HTTPS, backups, monitoring and reviewed proxy settings.
 
 ## Security and limits
 
