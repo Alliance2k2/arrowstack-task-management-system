@@ -135,6 +135,27 @@ test("initial offline state is explained", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("alert")).toContainText("Unable to reach");
 });
+test("deleting the task being edited restores the new task form", async ({
+  page,
+}) => {
+  await account(page);
+  await page.getByLabel("Title", { exact: true }).fill("Delete while editing");
+  await page.getByRole("button", { name: "Add task", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Edit Delete while editing", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Edit task", exact: true }),
+  ).toBeVisible();
+  page.once("dialog", (dialog) => dialog.accept());
+  await page
+    .getByRole("button", { name: "Delete Delete while editing", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "New task", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue("");
+});
 test("expired session clears task UI and returns to sign in", async ({
   page,
 }) => {

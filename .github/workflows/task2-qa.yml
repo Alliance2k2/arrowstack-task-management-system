@@ -46,15 +46,34 @@ jobs:
       - run: npx playwright install --with-deps chromium
         working-directory: frontend
       - run: node scripts/verify-browser.mjs
-      - name: Full backend audit (known dev-only advisories remain visible)
+      - name: Full backend dependency audit
         run: npm audit
         working-directory: backend
-        continue-on-error: true
       - run: npm audit --omit=dev
         working-directory: backend
-      - name: Full frontend tooling audit (known advisory remains visible)
+      - name: Full frontend dependency audit
         run: npm audit
         working-directory: frontend
-        continue-on-error: true
       - run: npm audit --omit=dev
         working-directory: frontend
+  containers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Create disposable container credentials
+        shell: python
+        run: |
+          import secrets
+          from pathlib import Path
+          values = {key: secrets.token_hex(32) for key in ('POSTGRES_PASSWORD', 'APP_DB_PASSWORD', 'JWT_SECRET')}
+          Path('.env').write_text(''.join(f'{key}={value}\n' for key, value in values.items()))
+      - run: docker compose config --quiet
+      - run: docker compose up --build -d --wait --wait-timeout 180
+      - run: node scripts/verify-compose.mjs
+      - name: Stop containers
+        if: always()
+        run: docker compose down

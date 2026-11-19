@@ -6,10 +6,10 @@ It supports account registration and login, private task CRUD, priorities, statu
 
 I adapted authentication patterns from my first project and added dedicated task authorization, concurrency and browser workflow checks. This project reinforced why database constraints and server-side permissions matter as much as the interface.
 
-Source: [add approved arrowstack-task-management-system repository URL]
+Source: https://github.com/Alliance2k2/arrowstack-task-management-system
 Demo: [add recording link]
 
-See the repository test evidence for exact results and limits. Docker execution, hosted CI and publication remain pending.
+See the repository test evidence for exact results and limits. The repository is published; see the current test evidence for hosted CI status. Docker execution remains unverified.
 
 #Arrowstack #FullStackDevelopment #React #PostgreSQL #SoftwareEngineering
 

@@ -1,3 +1,5 @@
+> Historical context: use [2026-11-19 readiness](submission-readiness-20261119.md), [testing](testing-20261119.md) and [requirements comparison](requirements-comparison-20261119.md) for current status.
+
 # Submission readiness - 2026-11-18
 
 The local application is verified for an internship demonstration. Publication/submission is pending; do not treat the older remote as the reviewed source. See the current [test evidence](testing.md), [requirements comparison](requirements-comparison-20261118.md), README, API documentation, demo-guide.md and linkedin-draft.md.

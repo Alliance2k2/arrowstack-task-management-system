@@ -1,6 +1,6 @@
 # Arrowstack Task Manager
 
-Publication authorized on 2026-11-19; see the [publication checkpoint](docs/publication-20261119.md) for current verification limits and the status of earlier reports.
+Current audit: [readiness report](docs/submission-readiness-20261119.md), [test evidence](docs/testing-20261119.md), [requirements matrix](docs/requirements-comparison-20261119.md). Both repositories were published with owner approval on 2026-11-19. The [publication checkpoint](docs/publication-20261119.md) preserves the earlier state.
 
 Independent full stack internship Task 2: private task tracking with React, TypeScript/Express, PostgreSQL and Prisma. Register, sign in, create/edit/delete tasks, track status/priority/deadlines, search/filter, paginate, and view account summaries. Ownership is enforced by the API; concurrent stale edits return 409.
 
@@ -37,7 +37,7 @@ Backend: `npm run typecheck`, `npm run lint`, `npm run format:check`, `npm run b
 
 Use a disposable **local database ending in _test**. Tests delete its users/tasks/sessions/audit records. In backend set NODE_ENV=test and TEST_DATABASE_URL privately, then run `npm run db:migrate`, `npm test`, `npm run test:runner`. Build backend first. From repository root, run `node scripts/verify-browser.mjs`; Windows Edge can be selected with PLAYWRIGHT_CHANNEL=msedge, otherwise install Chromium with `npx playwright install chromium` in frontend. Browser runner owns API 3003/UI 5176, requires child-process startup acknowledgment, and refuses unrelated API listeners. Remove test environment variables afterward.
 
-CI is `.github/workflows/task2-qa.yml`: PostgreSQL service, migrations, type/lint/format/build, API/concurrency tests and browser workflow. Hosted execution awaits approval to publish. Full tooling audit remains visible separately from a strict production audit. See current advisory limits in test evidence.
+CI is `.github/workflows/task2-qa.yml`: PostgreSQL service, migrations, type/lint/format/build, API/concurrency tests and browser workflow. Hosted execution began after approved publication; see the current readiness report. Full tooling audit remains visible separately from a strict production audit. See current advisory limits in test evidence.
 
 ## Docker local demonstration
 
@@ -47,4 +47,4 @@ Docker execution is unverified on this machine because Docker is not installed. 
 
 Argon2id passwords; strict validation; current-user checks; short-lived allowlisted JWTs; hashed refresh tokens with rotation, replay revocation and absolute expiry; HttpOnly/SameSite cookies; exact-origin auth mutations; safe errors and atomic audit records. Tokens are never stored in browser storage. Issued JWTs can remain valid for ten minutes after logout. Run both projects on different origins. No password reset, email verification, MFA, team sharing, reminders or production deployment is claimed.
 
-Proposed GitHub name: `Alliance2k2/arrowstack-task-management-system`. No remote creation or push is authorized yet. [Demo script](docs/demo-guide.md) and [LinkedIn draft](docs/linkedin-draft.md) are ready for owner review; neither is a published recording/post.
+GitHub: https://github.com/Alliance2k2/arrowstack-task-management-system . Repository creation and push were approved and performed on 2026-11-19. [Demo script](docs/demo-guide.md) and [LinkedIn draft](docs/linkedin-draft.md) are ready for owner review; neither is a published recording/post.

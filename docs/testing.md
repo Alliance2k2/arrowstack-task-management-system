@@ -1,3 +1,5 @@
+> Historical context: use [2026-11-19 readiness](submission-readiness-20261119.md), [testing](testing-20261119.md) and [requirements comparison](requirements-comparison-20261119.md) for current status.
+
 # Task 2 test evidence - 2026-11-18
 
 | Check | Observed result |

@@ -381,6 +381,9 @@ function App() {
                             await api("/tasks/" + task.id, {
                               method: "DELETE",
                             });
+                            setEditing((current) =>
+                              current?.id === task.id ? null : current,
+                            );
                             await load();
                           } catch (e) {
                             fail(e);

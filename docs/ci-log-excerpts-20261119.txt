@@ -1,0 +1,13 @@
+2026-11-19T08:17:07.1431059Z found 0 vulnerabilities
+2026-11-19T08:17:07.9697559Z found 0 vulnerabilities
+2026-11-19T08:17:22.4998439Z  Test Files  4 passed (4)
+2026-11-19T08:17:22.4998915Z       Tests  36 passed (36)
+2026-11-19T08:22:27.7922030Z   5 passed (8.5s)
+2026-11-19T08:22:27.8209792Z ##[group]Run npm audit
+2026-11-19T08:22:28.0944569Z found 0 vulnerabilities
+2026-11-19T08:22:28.1019431Z ##[group]Run npm audit --omit=dev
+2026-11-19T08:22:28.3731218Z found 0 vulnerabilities
+2026-11-19T08:22:28.3793674Z ##[group]Run npm audit
+2026-11-19T08:22:28.6051462Z found 0 vulnerabilities
+2026-11-19T08:22:28.6111748Z ##[group]Run npm audit --omit=dev
+2026-11-19T08:22:28.8363533Z found 0 vulnerabilities
