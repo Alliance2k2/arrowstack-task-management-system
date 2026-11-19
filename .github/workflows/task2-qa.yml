@@ -1,0 +1,60 @@
+name: Task 2 verification
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-bookworm
+        env:
+          POSTGRES_USER: qa
+          POSTGRES_PASSWORD: qa-disposable-ci-only
+          POSTGRES_DB: taskmanager_ci_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U qa -d taskmanager_ci_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://qa:qa-disposable-ci-only@127.0.0.1:5432/taskmanager_ci_test
+      TEST_DATABASE_URL: postgresql://qa:qa-disposable-ci-only@127.0.0.1:5432/taskmanager_ci_test
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+      - run: npm ci --prefix backend
+      - run: npm ci --prefix frontend
+      - run: npm run db:generate --prefix backend
+      - run: npm run db:migrate --prefix backend
+      - run: npm run typecheck --prefix backend
+      - run: npm run lint --prefix backend
+      - run: npm run format:check --prefix backend
+      - run: npm run build --prefix backend
+      - run: npm test --prefix backend
+      - run: npm run typecheck --prefix frontend
+      - run: npm run lint --prefix frontend
+      - run: npm run format:check --prefix frontend
+      - run: npm run build --prefix frontend
+      - run: npm run test:runner --prefix backend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: node scripts/verify-browser.mjs
+      - name: Full backend audit (known dev-only advisories remain visible)
+        run: npm audit
+        working-directory: backend
+        continue-on-error: true
+      - run: npm audit --omit=dev
+        working-directory: backend
+      - name: Full frontend tooling audit (known advisory remains visible)
+        run: npm audit
+        working-directory: frontend
+        continue-on-error: true
+      - run: npm audit --omit=dev
+        working-directory: frontend

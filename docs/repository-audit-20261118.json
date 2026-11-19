@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-18",
+  "scope": "Tracked files plus untracked nonignored submission candidates; all reachable local commits. Checks high-confidence GitHub/AWS token and private-key signatures; filenames for ignored secret/generated files. Does not prove absence of all possible secrets. Private ignored local files are not submission candidates.",
+  "candidateFiles": 68,
+  "reachableCommits": 0,
+  "credentialSignatureMatches": [],
+  "prohibitedCandidateFiles": [],
+  "historicalSignatureMatches": []
+}

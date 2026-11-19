@@ -1,0 +1,65 @@
+services:
+  database:
+    image: postgres:18-bookworm
+    environment:
+      POSTGRES_USER: arrowstack
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in root .env}
+      POSTGRES_DB: arrowstack
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD in root .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./backend/docker-init.sh:/docker-entrypoint-initdb.d/10-app-role.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U arrowstack -d arrowstack"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  migration:
+    build:
+      context: ./backend
+      target: migration
+    environment:
+      DATABASE_URL: postgresql://arrowstack:${POSTGRES_PASSWORD}@database:5432/arrowstack
+    command:
+      - sh
+      - -ec
+      - |
+        npx prisma migrate deploy
+        node --input-type=module <<'JS'
+        import { Client } from 'pg';
+        const client = new Client({ connectionString: process.env.DATABASE_URL });
+        await client.connect();
+        try { await client.query('GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "User", "RefreshSession", "AuditEvent", "Task" TO arrowstack_runtime'); }
+        finally { await client.end(); }
+        JS
+    depends_on:
+      database:
+        condition: service_healthy
+  backend:
+    build:
+      context: ./backend
+      target: runtime
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: 3002
+      DATABASE_URL: postgresql://arrowstack_runtime:${APP_DB_PASSWORD}@database:5432/arrowstack
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in root .env}
+      WEB_ORIGIN: http://127.0.0.1:8082
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3002/api/v1/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  frontend:
+    build: ./frontend
+    ports:
+      - "127.0.0.1:8082:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+volumes:
+  postgres_data:

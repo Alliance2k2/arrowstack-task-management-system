@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-19",
+  "scope": "Candidate filenames and high-confidence token/private-key signatures; reachable commit patches. Not a guarantee that all secret formats are absent. Ignored local secrets excluded.",
+  "candidateFiles": 72,
+  "reachableCommits": 0,
+  "credentialSignatureMatches": [],
+  "prohibitedCandidateFiles": [],
+  "historicalSignatureMatches": []
+}

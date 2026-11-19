@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+}
+enum Role {
+  USER
+  ADMIN
+}
+model User {
+  id String @id @default(uuid()) @db.Uuid
+  email String @unique
+  name String
+  passwordHash String
+  role Role @default(USER)
+  createdAt DateTime @default(now())
+  tasks Task[]
+  sessions RefreshSession[]
+  events AuditEvent[]
+}
+model RefreshSession {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String @unique
+  familyId String @db.Uuid
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([userId])
+  @@index([familyId])
+}
+model AuditEvent {
+  id String @id @default(uuid()) @db.Uuid
+  userId String? @db.Uuid
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action String
+  createdAt DateTime @default(now())
+  @@index([userId, createdAt])
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+model Task {
+  id String @id @default(uuid()) @db.Uuid
+  ownerId String @db.Uuid
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  title String @db.VarChar(160)
+  description String @default("") @db.VarChar(4000)
+  status TaskStatus @default(TODO)
+  priority Priority @default(MEDIUM)
+  dueAt DateTime?
+  version Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([ownerId, createdAt])
+}
